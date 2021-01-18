@@ -1,0 +1,21 @@
+{
+  "name": "fried-fame-email",
+  "version": "1.0.0",
+  "description": "Fried-Fame Email Delivery Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "github:eithan1231/fried-fame-email",
+  "author": "Eithan Hersey-Tuit",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0",
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.4.17"
+  }
+}
