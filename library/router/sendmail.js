@@ -33,12 +33,12 @@ module.exports = async(ctx, next) =>
 {
   if(!ctx.state.rpcAuthorization) {
     // Unauthenticated
-    return status = 401;
+    return ctx.status = 401;
   }
 
   if(typeof ctx.request.body != 'object') {
     // bad request status
-    return status = 400;
+    return ctx.status = 400;
   }
 
   // Yes... I know, we are sending a dummy-response. This is due to the fact
