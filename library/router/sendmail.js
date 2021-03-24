@@ -1,12 +1,40 @@
 const nodemailer = require('nodemailer');
 
+const getSecurityPolicies = () => {
+  switch (process.env.SMTP_SECURE) {
+    case 'STRICT':
+      return {
+        secure: true,
+        requireTLS: true
+      };
+
+    case 'STARTTLS':
+      return {
+        secure: false,
+        requireTLS: true
+      };
+
+    case 'NONE':
+      return {
+        secure: false,
+        ignoreTLS: true
+      };
+
+    default:
+      // return nodemailer defaults
+      return { };
+  }
+}
+
 const sendmail = async(options) => {
   try {
+    const securityPolicies = getSecurityPolicies();
+
     // creating mail transporter
     const transporter = nodemailer.createTransport({
+      ...securityPolicies,
       host: process.env.SMTP_HOSTNAME,
       port:  process.env.SMTP_PORT,
-      secure: process.env.SMTP_SECURE,
       auth: {
         user: process.env.SMTP_USERNAME,
         pass: process.env.SMTP_PASSWORD
@@ -33,12 +61,12 @@ module.exports = async(ctx, next) =>
 {
   if(!ctx.state.rpcAuthorization) {
     // Unauthenticated
-    return status = 401;
+    return ctx.status = 401;
   }
 
   if(typeof ctx.request.body != 'object') {
     // bad request status
-    return status = 400;
+    return ctx.status = 400;
   }
 
   // Yes... I know, we are sending a dummy-response. This is due to the fact
